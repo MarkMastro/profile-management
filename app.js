@@ -45,6 +45,7 @@ app.post('/add', urlencodedParser,  (req, res) => {
   })
 });
 
+
 app.get('/view/:id?', (req, res) => {
 
   fs.readFile(fileName, 'utf-8', (err, jsonString) => {
@@ -53,8 +54,8 @@ app.get('/view/:id?', (req, res) => {
     }
     try{
       const data = JSON.parse(jsonString)
-      if(req.params.id) {
-        const targetUser = getDataAtIndex(req.params.id, data);
+      if(req.query.id) {
+        const targetUser = getDataAtIndex(req.query.id, data);
         res.send(targetUser);
       } else {
         res.send(data)
@@ -65,6 +66,10 @@ app.get('/view/:id?', (req, res) => {
   
      
   });
+})
+
+app.patch('/edit/:id', (req, res) => {
+
 })
 
 
