@@ -1,10 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser')
-const fs = require('fs');
-const jsonParser = bodyParser.json()
+import express from 'express';
+import bodyParser from 'body-parser'
+import fs from 'fs';
+
 const port = 3000;
 const app = express();
-
 const fileName = './post.json';
 
 const urlencodedParser = bodyParser.json({type: "*/*"})
@@ -36,8 +35,16 @@ app.post('/add', urlencodedParser,  (req, res) => {
           console.log('file written!', data)
         }
       })
-      res.status(200)
-      res.send("success!")
+
+      fs.readFile(fileName, 'utf-8', (err, jsonString) => {
+        try{
+          const data = JSON.parse(jsonString)
+            res.status(200)
+            res.send(data)
+         } catch (e) {
+          console.log(e)
+        }
+      })
 
     } catch (e) {
       console.log("error parsing json", e)
@@ -98,12 +105,10 @@ app.patch('/edit/:id', urlencodedParser, (req, res) => {
       fs.writeFile(fileName, JSON.stringify(data, null, 2), err => {
         if (err) {
           console.log("error writing file", err)
-        } else {
-          console.log('file written!', data)
-        }
+        } 
       })
       res.status(200)
-      res.send("success!")
+      res.send(data)
     } catch (e) {
       console.log(e)
     }
@@ -115,3 +120,4 @@ app.patch('/edit/:id', urlencodedParser, (req, res) => {
 app.listen(port, () =>
   console.log(`Example app listening on port ${port}!`),
 );
+export default app;

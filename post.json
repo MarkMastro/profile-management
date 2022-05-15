@@ -19,5 +19,12 @@
     "age": "23",
     "gender": "Male",
     "email": "userthree@gmail.com"
+  },
+  {
+    "id": "4",
+    "name": "new name",
+    "age": "22",
+    "gender": "Male",
+    "email": "userone@gmail.com"
   }
 ]
